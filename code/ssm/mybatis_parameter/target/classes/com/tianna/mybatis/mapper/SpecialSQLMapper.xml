@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tianna.mybatis.mapper.SpecialSQLMapper">
+    <!--List<User> getUserByLike(@Param("mohu") String mohu);-->
+    <select id="getUserByLike" resultType="user">
+        <!--使用${}字符串拼接赋值-->
+        <!--select * from t_user where username like '%${mohu}%'-->
+        <!--使用#{}和SQL中的字符串拼接函数concat()-->
+        <!--select * from t_user where username like concat('%',#{mohu},'%')-->
+        <!--使用双引号+#{}进行拼接-->
+        select * from t_user where username like "%"#{mohu}"%"
+    </select>
+    <!--void deleteMoreUser(@Param("ids") String ids);-->
+    <delete id="deleteMoreUser">
+        delete from t_user where id in (${ids})
+    </delete>
+    <!--List<User> getUserList(@Param("tableName") String tableName);-->
+    <select id="getUserList" resultType="user">
+        select * from ${tableName}
+    </select>
+    <!--int insertUser(User user);-->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user values(null,#{username},#{password},#{age},#{gender},#{email})
+    </insert>
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tianna.mybatis.mapper.UserMapper">
+    <!--User getUserByUsername(String username);-->
+    <select id="getUserByUsername" resultType="user">
+        <!--1、使用${}时需要加单引号-->
+        <!--select * from t_user where username = '${username}'-->
+        <!--2、使用#{}时不加单引号，一般使用该方法-->
+        select * from t_user where username = #{username}
+    </select>
+    <!--User checkLogin(String username,String password);-->
+    <select id="checkLogin" resultType="user">
+        <!--1、使用arg0,arg1,...-->
+        <!--select * from t_user where username = #{arg0} and password = #{arg1}-->
+        <!--2、使用param1,param2,...-->
+        <!--select * from t_user where username = #{param1} and password = #{param2}-->
+        <!--3、混合使用-->
+        select * from t_user where username = #{arg0} and password = #{param2}
+    </select>
+    <!--User checkLoginByMap(Map<String,Object> map);-->
+    <select id="checkLoginByMap" resultType="user">
+        select * from t_user where username = #{username} and password = #{password}
+    </select>
+    <!--void insertUser(User user);-->
+    <insert id="insertUser">
+        insert into t_user values(null,#{username},#{password},#{age},#{gender},#{email})
+    </insert>
+    <!--User checkLoginByParam(@Param("username") String username, @Param("password") String password);-->
+    <select id="checkLoginByParam" resultType="user">
+        <!--1、以param1,param2,...为键，以参数为值。-->
+        <!--select * from t_user where username = #{param1} and password = #{param2}-->
+        <!--2、以@Param注解的value值为键，以参数为值。-->
+        select * from t_user where username = #{username} and password = #{password}
+    </select>
+    <!--User checkLoginByPList(List<String> loginInfo);-->
+    <select id="checkLoginByPList" resultType="user">
+        select * from t_user where username = #{list[0]} and password = #{list[1]}
+    </select>
+    <!--User checkLoginByArray(String[] loginInfo);-->
+    <select id="checkLoginByArray" resultType="user">
+        select * from t_user where username = #{array[0]} and password = #{array[1]}
+    </select>
+
+</mapper>
